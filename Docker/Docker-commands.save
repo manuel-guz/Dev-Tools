@@ -1,0 +1,145 @@
+Docker commands:
+* --> critical commands
+
+Images: --> https://hub.docker.com/
+
+* docker images --> list of installed images  (IMAGE ID is the identification id for a unique image)
+  docker rmi $img  --> erase the img installed
+  docker rmi -f $(docker images -aq) --> erase forced
+
+
+
+
+docker search $ --> search for all the images in docker hub
+
+docker pull $  --> downloading the image of the requested program
+
+docker run $  --> run the image  + -it to run iteratively (in shows the console of the program running in the image
+
+)
+
+* docker ps ---> when the image runs, it generates a container with another ID code showed with this command
+
+docker ps -a -->log of containers
+docker ps -aq --> it shows just de container IDs
+
+ctrl + d --> get out from the process, it keeps the process running
+
+* docker rm $ID  --> erase a container (it remove the log either)
+  
+  docker rm $(docker ps -aq) -f    -->  -f means forced, it is used when  there is a container running 
+
+
+docker stop $ID --> stop a container process
+
+docker stop $(docker ps -aq)  --> it stops all the running containers
+
+
+docker start $ID --> rerun the closed container
+
+
+port mirror:
+
+* docker run -p 3000:80 $image  --> -p set the external:internal working port of the container (e.g ext3000:int80)
+
+ docker run -p 3000:80 -d $image --> -d means "detach", is keeps the console able to new inputs puting the containter proces running in background. This returns the ID of the process 
+
+ docker run -p 3000:80 -d --name $image  --> --name node1  this name the container as node1
+
+ENVIROMENT VARIABLES (-e):
+
+docker run -d -p 3307:3306 --name mydatabase -e MYSQL_ROOT_PASSWORD=contraseña mysql  --> -e ***ENV*****=contraseña
+this is the way to pass the enviroment variables to the process in the container created
+
+ 
+format output docker info:
+
+docker ps -- format="ID\t{{.ID}}"\nNombre:\t{{name}}
+  
+
+VOLUMES:moving the tada between the computer and the container
+Coping the computer data to the container (e.g pc --> nginx). By default the path to transfer the files in nginx is /usr/share/nginx/html, this info is located atthe  hub.docker documentation:
+
+* docker run -d -p 80:80 --name website -v /home/user/Desktop/webtest:/usr/share/nginx/html nginx
+
+With -v we are seting the location of both direcctions in order to do the tranfer data. from the pc desktop, the file webtest is moving to thehtml file in the container of nginx.
+
+adding :ro means that it is read only, this way if something change in the container it will not change the pc file.
+
+docker run -d -p 80:80 --name website -v /home/user/Desktop/webtest:/usr/share/nginx/html:ro nginx
+
+
+To generate a connection inside the container we use(to modify data from inside the container, you must erase the :ro  --> read only mode):
+
+docker exec -it website bash   --> this will open a bash running inside the container.
+
+
+
+Dockerfile:
+
+This file specify the instruction about how the container works, their img have to use and all the steps that must be use to make it run.
+
+For example the next Dockerfile will copy the files in docker run -d -p 80:80 --name website -v /home/user/Desktop/webtest to /usr/share/nginx/html automatically.
+
+first we have to create a file called Dockerfile and inside the next Docker syntax:
+
+FROM nginx: 1.17 --> set the version used in the dev
+
+WORKDIR /usr/share/nginx/html
+
+COPY . . --> the first dot means the local path we are step on (the direction of the files we want to copy), the second dot targets the WOEKDIR folder
+
+
+To generate a img of the proyect type the next code:
+
+docker build -t webtest .  -->this will create an img with the name webtest running the instructions on specified in the Dockerfile. Again, the dot means that the path is the seam that we are posisionated in the console path.
+
+UPLOADING THE IMG TO DOCKERHUB:
+
+To upload the img we must to create an account and bear in mind that we will use the nick name in the code.
+
+  docker build -t janoguz/webtest .  --> janoguz is the nickname and /webtest is the proyect, plus that the dot means that the direction of the proyect is where the console is steps on.
+
+this will show the new img in docker images, then we have to login in the console:
+
+  docker login   --> will request user and password
+
+
+  docker push janoguz/webtest  --> that push the img to docker.hub
+
+
+ This will displayed the proyect in the docker.hub website and will give us a command to install the proyect in a new container
+
+
+
+EXECT THE UPLOADED IMG:
+
+docker pull janoguz/webtest  --> it downloads the img and it will shows in docker images
+
+
+docker run -d  -p 3000:80 --name webtest1 janoguz/webtest  --> running the web downloaded image from the account
+
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
