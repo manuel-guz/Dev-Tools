@@ -30,7 +30,7 @@ ctrl + d --> get out from the process, it keeps the process running
   docker rm $(docker ps -aq) -f    -->  -f means forced, it is used when  there is a container running 
 
 
-docker stop $ID --> stop a container process
+docker stop $ID --> stop a container process1
 
 docker stop $(docker ps -aq)  --> it stops all the running containers
 
@@ -66,6 +66,8 @@ With -v we are seting the location of both direcctions in order to do the tranfe
 
 adding :ro means that it is read only, this way if something change in the container it will not change the pc file.
 
+
+
 docker run -d -p 80:80 --name website -v /home/user/Desktop/webtest:/usr/share/nginx/html:ro nginx
 
 
@@ -90,7 +92,7 @@ WORKDIR /usr/share/nginx/html
 COPY . . --> the first dot means the local path we are step on (the direction of the files we want to copy), the second dot targets the WOEKDIR folder
 
 
-To generate a img of the proyect type the next code:
+To generate a img of the proyect, type the next code:
 
 docker build -t webtest .  -->this will create an img with the name webtest running the instructions on specified in the Dockerfile. Again, the dot means that the path is the seam that we are posisionated in the console path.
 
@@ -113,6 +115,7 @@ this will show the new img in docker images, then we have to login in the consol
 
 
 EXECT THE UPLOADED IMG:
+
 
 docker pull janoguz/webtest  --> it downloads the img and it will shows in docker images
 
