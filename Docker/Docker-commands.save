@@ -120,7 +120,7 @@ EXECT THE UPLOADED IMG:
 docker pull janoguz/webtest  --> it downloads the img and it will shows in docker images
 
 
-docker run -d  -p 3000:80 --name webtest1 janoguz/webtest  --> running the web downloaded image from the account
+docker run -d  -p 3000:80 --name webtest1 janoguz/webtest  --> running the web downloaded image from the   account
 
   
 
