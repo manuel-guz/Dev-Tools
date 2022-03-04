@@ -1,0 +1,20 @@
+
+version: "3"
+services:
+    webvolumes:
+        container_name: exampleapp
+        restart: always
+        build: .
+        ports:
+            - "5000:3000"
+        links:
+            - databasemg
+        volumes:
+            - .:/usr/src/app
+    databasemg:
+        container_name: mymongodb
+        image: mongo
+        ports:
+            - "27018:27017"
+        logging:
+            driver: none
