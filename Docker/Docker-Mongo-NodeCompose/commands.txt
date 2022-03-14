@@ -1,3 +1,6 @@
+
+                                       DOCKER-MONGO-NODE-COMPOSE
+
 npm init -y   --> init npm package
 
 npm i express mongoose   --> the express framework to the backend and the connection module mongoose
